@@ -1,14 +1,17 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:golib_flutter/Api/Api.dart';
 
 
 class HttpUtil {
   static HttpUtil instance;
   Dio dio;
   BaseOptions options;
+  CookieJar cookieJar;
 
   CancelToken cancelToken = new CancelToken();
 
@@ -24,7 +27,7 @@ class HttpUtil {
     //BaseOptions、Options、RequestOptions 都可以配置参数，优先级别依次递增，且可以根据优先级别覆盖参数
     options = new BaseOptions(
       //请求基地址,可以包含子路径
-      baseUrl: "http://www.google.com",
+      baseUrl: "",
       //连接服务器超时时间，单位是毫秒.
       connectTimeout: 10000,
       //响应流上前后两次接受到数据的间隔，单位为毫秒。
@@ -32,22 +35,30 @@ class HttpUtil {
       //Http请求头.
       headers: {
         //do something
-        "version": "1.0.0"
+//        "version": "1.0.0",
+        "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36",
+        "Accept":"*/*",
+        "Connection":"keep-alive"
       },
+      followRedirects:true,
       //请求的Content-Type，默认值是[ContentType.json]. 也可以用ContentType.parse("application/x-www-form-urlencoded")
-      contentType: ContentType.json.toString(),
+//      contentType: ContentType.json.toString(),
+      contentType:ContentType.parse("application/x-www-form-urlencoded").toString(),
+//      contentType: ContentType.html.toString(),
       //表示期望以那种格式(方式)接受响应数据。接受4种类型 `json`, `stream`, `plain`, `bytes`. 默认值是 `json`,
       responseType: ResponseType.json,
     );
 
     dio = new Dio(options);
 
+
     //Cookie管理
-    dio.interceptors.add(CookieManager(CookieJar()));
+    cookieJar=CookieJar();
+    dio.interceptors.add(CookieManager(cookieJar));
 
     //添加拦截器
     dio.interceptors.add(InterceptorsWrapper(onRequest: (RequestOptions options) {
-      print("请求之前");
+      print("请求之前-------${options}");
       // Do something before request is sent
       return options; //continue
     }, onResponse: (Response response) {
@@ -69,8 +80,8 @@ class HttpUtil {
     try {
       response = await dio.get(url, queryParameters: data, options: options, cancelToken: cancelToken);
       print('get success---------${response.statusCode}');
-      print('get success---------${response.data}');
-
+      log('get success---------${response.data}');
+      log("cookies----------${cookieJar.loadForRequest(Uri.parse(url))}");
 //      response.data; 响应体
 //      response.headers; 响应头
 //      response.request; 请求体
@@ -88,14 +99,25 @@ class HttpUtil {
    */
   post(url, {data, options, cancelToken}) async {
     Response response;
+    String msg;
     try {
       response = await dio.post(url, queryParameters: data, options: options, cancelToken: cancelToken);
-      print('post success---------${response.data}');
+//      print('post success---------${response}');
+      log('post success---------${response}');
+      log("cookies----------${cookieJar.loadForRequest(Uri.parse(url))}");
     } on DioError catch (e) {
       print('post error---------$e');
       formatError(e);
+      if(e.message.contains("302")&&url==Api_Manage.LOGIN_URL){
+        //处理重定向
+        try{
+          response = await dio.post(Api_Manage.REDRINFO);
+        } on DioError catch(e){
+
+        }
+      }
     }
-    return response.data;
+    return response==null?msg:response.data;
   }
 
   /*

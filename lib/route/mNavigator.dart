@@ -18,11 +18,23 @@ class NavigatorUtil{
         transition: TransitionType.material);
   }
 
+  static void Back(BuildContext context){
+    Application.router.pop(context);
+  }
+
   static void goLoginPage(BuildContext context,{clearStack:true}) {
     _navigateTo(context, Routes.login, clearStack: clearStack);
   }
 
   static void goHomePage(BuildContext context){
     _navigateTo(context, Routes.home,clearStack: true);
+  }
+
+  static void goSearchPage(BuildContext context){
+    _navigateTo(context, Routes.search,clearStack: false);
+  }
+
+  static void goSearchResult(BuildContext context,{kw:""}){
+    _navigateTo(context, Routes.searchResult.replaceAll(":kw", kw),clearStack: false);
   }
 }

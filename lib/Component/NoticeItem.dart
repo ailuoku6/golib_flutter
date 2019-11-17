@@ -23,7 +23,7 @@ class NoticeItem extends StatelessWidget{
           crossAxisAlignment:CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 5,bottom: 5,left: 10,right: 10),
+              margin: EdgeInsets.all(10),
               child: Text(Date),
             ),
             Container(
@@ -35,7 +35,7 @@ class NoticeItem extends StatelessWidget{
             ),
 
             Container(
-              margin: EdgeInsets.only(top: 5,bottom: 5,left: 10,right: 10),
+              margin: EdgeInsets.all(10),
               child: Text(
                 subTitle,
                 style: new TextStyle(

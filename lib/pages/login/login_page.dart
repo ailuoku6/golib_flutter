@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:golib_flutter/Spider/LoginSpider.dart';
+import 'package:golib_flutter/Spider/PatchaSpider.dart';
 
 class LoginPage extends StatefulWidget{
   @override
@@ -9,7 +11,19 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
 
   TextEditingController _unameController = new TextEditingController();
   TextEditingController _pwdController = new TextEditingController();
-  bool pwdShow = false; //密码是否显示明文
+  bool pwdShow = true; //密码是否显示明文
+
+  _LoginPageState(){
+//    new PatchaSpider().getImg();
+  }
+
+  _handleLogin() async {
+    String userName = _unameController.text;
+    String passWord = _pwdController.text;
+
+    var rep = await LoginSpider().Login(userName, passWord);
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +59,22 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
                     ),
                   ),
                   TextField(
+                    controller: _pwdController,
                     decoration: InputDecoration(
                         labelText: "密码",
 //                        hintText: "您的登录密码",
                         prefixIcon: Icon(Icons.lock)
                     ),
-                    obscureText: true,
+                    obscureText: pwdShow,
                   ),
                   RaisedButton(
                     color: Colors.blue,
                     highlightColor: Colors.blue[700],
                     colorBrightness: Brightness.dark,
                     splashColor: Colors.grey,
-                    child: Text("Submit"),
+                    child: Text("登录"),
                     shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                    onPressed: () {},
+                    onPressed: ()=>_handleLogin(),
                   )
                 ],
               ),

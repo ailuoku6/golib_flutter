@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
         title: Text("科大Lib"),
         actions: <Widget>[ //导航栏右侧菜单
           IconButton(icon: Icon(Icons.search), onPressed: () {
-
+            NavigatorUtil.goSearchPage(context);
           }),
         ],
       ),
@@ -110,17 +110,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
         child: HomeBuilder.homeDrawer(context),
       ),
       body: Container(
-        child: ListView.builder(
-            padding: new EdgeInsets.only(left: 10,right: 10,bottom: 10),
-            itemCount: _notices.length,
+        child: RefreshIndicator(
+          onRefresh: _initData,
+          child:ListView.builder(
+              padding: new EdgeInsets.only(left: 10,right: 10,bottom: 10),
+              itemCount: _notices.length,
 //            itemExtent: 50.0, //强制高度为50.0
-            itemBuilder: (BuildContext context, int index) {
-              return new NoticeItem(Link: _notices[index].Link,Date: _notices[index].Date,subTitle: _notices[index].subTitle,onPress: (){
-                Scaffold.of(context).showSnackBar(new SnackBar(
-                  content: new Text(_notices[index].subTitle),
-                ));
-              });
-            }
+              itemBuilder: (BuildContext context, int index) {
+                return new NoticeItem(Link: _notices[index].Link,Date: _notices[index].Date,subTitle: _notices[index].subTitle,onPress: (){
+                  Scaffold.of(context).showSnackBar(new SnackBar(
+                    content: new Text(_notices[index].subTitle),
+                  ));
+                });
+              }
+          )
         )
       ),
     );
