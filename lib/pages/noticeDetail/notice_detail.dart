@@ -64,20 +64,6 @@ class noticeDetailState extends State<noticeDetail> with TickerProviderStateMixi
             });
           }
       ),
-//      body: Builder(builder: (BuildContext context) {
-//        return WebView(
-////          initialUrl: widget.url,
-//          javascriptMode: JavascriptMode.unrestricted,
-//          onWebViewCreated: (WebViewController webViewController) {
-//            String contentBase64 = base64Encode(const Utf8Encoder().convert(_detailhtml));
-//            webViewController.loadUrl('data:text/html;base64,$contentBase64');
-//            _webViewController = webViewController;
-//            setState(() {
-//              _webViewController;
-//            });
-//          }
-//        );
-//      }),
     );
   }
 

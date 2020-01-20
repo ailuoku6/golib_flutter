@@ -103,7 +103,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin{
         child: new Column(
           children: <Widget>[
             new Container(
-              child: new Text("热门图书", style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
+              child: new Text("热门搜索", style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
               margin: const EdgeInsets.only(top: 16.0, left: 16.0, bottom: 16.0),
               alignment: Alignment.topLeft,
             ),

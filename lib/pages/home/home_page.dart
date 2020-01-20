@@ -21,7 +21,10 @@ class HomeBuilder {
         leading: new CircleAvatar(child: new Icon(Icons.bookmark)),
         title: new Text('我的借阅'),
 //        subtitle: new Text("Drawer item B subtitle"),
-        onTap: () => {},
+        onTap: () => {
+          //进行判断是否登陆，进行跳转
+          NavigatorUtil.goMyBorrow(context)
+        },
       ),
       new Divider(
         height: 1.0,

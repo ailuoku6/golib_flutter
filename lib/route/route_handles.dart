@@ -5,6 +5,7 @@ import 'package:golib_flutter/pages/login/login_page.dart';
 import 'package:golib_flutter/pages/searchPage/search_page.dart';
 import 'package:golib_flutter/pages/searchResult/search_result.dart';
 import 'package:golib_flutter/pages/noticeDetail/notice_detail.dart';
+import 'package:golib_flutter/pages/myBorrow/my_borrow.dart';
 
 var homeHandle = new Handler(handlerFunc: (BuildContext context,Map<String,List<Object>> params){
   return HomePage();
@@ -23,4 +24,7 @@ var searchResultHandle = new Handler(handlerFunc: (BuildContext context,Map<Stri
 });
 var noticeDetailHandle = new Handler(handlerFunc: (BuildContext context,Map<String,List<Object>> params){
   return noticeDetail(Uri.decodeComponent(params['url'][0]));
+});
+var myBorrowHandle = new Handler(handlerFunc: (BuildContext context,Map<String,List<Object>> params){
+  return myBorrow();
 });
