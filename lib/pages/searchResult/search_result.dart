@@ -13,13 +13,20 @@ class searchResult extends StatefulWidget{
 }
 
 class searchResultState extends State<searchResult> with TickerProviderStateMixin{
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: new Text(widget.kw),
+        title: new Text(widget.kw+"的搜索结果"),
       ),
+
     );
   }
 

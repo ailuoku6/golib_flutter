@@ -9,6 +9,7 @@ class Routes{
   static String login = "/login";
   static String search = "/search";
   static String searchResult = "/searchResult/:kw";
+  static String noticeDetail = "/noticeDetail/:url";
 
   static void configureRoutes(Router router){
     router.notFoundHandler = new Handler(handlerFunc: (BuildContext context,Map<String,List<String>> params){
@@ -19,5 +20,6 @@ class Routes{
     router.define(login, handler: loginHandle);
     router.define(search, handler: searchHandle);
     router.define(searchResult, handler: searchResultHandle);
+    router.define(noticeDetail, handler: noticeDetailHandle);
   }
 }

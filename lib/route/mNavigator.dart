@@ -37,4 +37,8 @@ class NavigatorUtil{
   static void goSearchResult(BuildContext context,{kw:""}){
     _navigateTo(context, Routes.searchResult.replaceAll(":kw", kw),clearStack: false);
   }
+  static void goNoticeDetail(BuildContext context,{url:""}){
+    print(url);
+    _navigateTo(context, Routes.noticeDetail.replaceAll(":url", Uri.encodeComponent(url)),clearStack: false);
+  }
 }

@@ -118,9 +118,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
 //            itemExtent: 50.0, //强制高度为50.0
               itemBuilder: (BuildContext context, int index) {
                 return new NoticeItem(Link: _notices[index].Link,Date: _notices[index].Date,subTitle: _notices[index].subTitle,onPress: (){
-                  Scaffold.of(context).showSnackBar(new SnackBar(
-                    content: new Text(_notices[index].subTitle),
-                  ));
+//                  Scaffold.of(context).showSnackBar(new SnackBar(
+//                    content: new Text(_notices[index].Link),
+//                  ));
+                  NavigatorUtil.goNoticeDetail(context,url: _notices[index].Link);
                 });
               }
           )
